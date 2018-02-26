@@ -1,0 +1,24 @@
+---
+- name: Pull ISOs
+  get_url:
+     url: "{{ item.origin }}"
+     dest: "{{ item.path }}"
+     mode: 0440
+  with_items:
+    - "{{ mount_isos }}"
+ 
+- name: Create points
+  file:
+    dest: "{{ item.mount_point }}"
+    state: directory
+    mode: 0777
+  with_items: "{{ mount_isos }}"
+
+- name: Mount disks
+  mount:
+    name: "{{ item.mount_point }}"
+    src: "{{ item.path }}"
+    fstype: iso9660
+    state: mounted
+  with_items:
+    - "{{ mount_isos }}"

@@ -1,0 +1,4 @@
+mount_isos:
+ - mount_point: /test-mnt/test
+   path: /test-mnt/test.iso
+   origin: "https://file.exmmle.com/test.iso"
