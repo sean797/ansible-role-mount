@@ -6,13 +6,18 @@
      mode: 0440
   with_items:
     - "{{ mount_isos }}"
- 
+
 - name: Create points
   file:
     dest: "{{ item.mount_point }}"
     state: directory
     mode: 0777
+    recurse: true
   with_items: "{{ mount_isos }}"
+  register: create_directory
+  failed_when:
+    - create_directory.module_stdout is defined
+    - '"Read-only file system" not in create_directory.module_stdout'
 
 - name: Mount disks
   mount:
