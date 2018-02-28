@@ -1,4 +1,10 @@
 ---
+- name: Ensure requested download dir exists
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: 0775
+
 - name: Pull ISOs
   get_url:
      url: "{{ item.origin }}"
